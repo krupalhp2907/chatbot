@@ -1,0 +1,63 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+*, ::after, ::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+.avatar-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.chatbot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  color: 2b313f;
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+.chatbot header {
+  width: 100%;
+  min-height: 80px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background-color: black;
+  color: white;
+}
+
+

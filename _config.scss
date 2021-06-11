@@ -1,0 +1,141 @@
+// utils 
+
+@function rem($pixels) {
+    @if(unitless($pixels)) {
+        $pixels: $pixels * 1px;
+    }
+    @return $pixels / $font-size;
+}
+
+@function em($pixels, $context: $font-size) {
+    @if (unitless($pixels)) {
+      $pixels: $pixels * 1px;
+    }
+  
+    @if (unitless($context)) {
+      $context: $context * 1px;
+    }
+  
+    @return $pixels / $context * 1em;
+}
+
+$breakpoints: (
+  xs: 576px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px
+);
+
+// Respond above.
+@mixin respond-above($breakpoint) {
+
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+  
+      // Get the breakpoint value.
+      $breakpoint-value: map-get($breakpoints, $breakpoint);
+  
+      // Write the media query.
+      @media (min-width: $breakpoint-value) {
+        @content;
+      }
+  
+    // If the breakpoint doesn't exist in the map.
+    } @else {
+  
+      // Log a warning.
+      @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+  }
+
+  @mixin respond-below($breakpoint) {
+
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+  
+      // Get the breakpoint value.
+      $breakpoint-value: map-get($breakpoints, $breakpoint);
+  
+      // Write the media query.
+      @media (max-width: ($breakpoint-value - 1)) {
+        @content;
+      }
+  
+    // If the breakpoint doesn't exist in the map.
+    } @else {
+  
+      // Log a warning.
+      @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+  }
+
+  @mixin respond-between($lower, $upper) {
+
+    // If both the lower and upper breakpoints exist in the map.
+    @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper) {
+  
+      // Get the lower and upper breakpoints.
+      $lower-breakpoint: map-get($breakpoints, $lower);
+      $upper-breakpoint: map-get($breakpoints, $upper);
+  
+      // Write the media query.
+      @media (min-width: $lower-breakpoint) and (max-width: ($upper-breakpoint - 1)) {
+        @content;
+      }
+    
+    // If one or both of the breakpoints don't exist.
+    } @else {
+  
+      // If lower breakpoint is invalid.
+      @if (map-has-key($breakpoints, $lower) == false) {
+  
+        // Log a warning.
+        @warn 'Your lower breakpoint was invalid: #{$lower}.';
+      }
+  
+      // If upper breakpoint is invalid.
+      @if (map-has-key($breakpoints, $upper) == false) {
+  
+        // Log a warning.
+        @warn 'Your upper breakpoint was invalid: #{$upper}.';
+      }
+    }
+  }
+
+// common
+$font-size: 16px;
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+$font-weight: 300;
+
+// bot
+$bot-width: 100%;
+$bot-height: auto;
+// always in pixel
+$bot-font-size: 16px;
+
+// bot image
+$bot-image-background-color: transparent;
+// bot image box shadow or '0 0 7px 0 rgba(0,0,0,.15)'
+$bot-image-box-shadow: none;
+$bot-image-border-radius: 0;
+
+// bot header
+// wrt .header font-size ems
+$bot-header-min-height: 5em;
+$bot-header-height: 5em;
+// or 0 9.5px 12.7px 0 rgba(0,0,0,.05)
+$bot-header-shadow: none;
+$bot-header-padding: 0 1.5em;
+
+$bot-header-image-height: calc(#{$bot-header-height} - 10px);
+$bot-header-image-width: $bot-header-image-height;
+$bot-header-image-margin-right: 1.375em;
+
+// bot name
+$bot-header-name-font-size: 1.5em;
+$bot-header-name-line-height: 1.55em;
+$bot-header-name-font-weight: 600;
+$bot-header-name-padding: 0 0.9375em 0 0;
+
+// bot status
+$bot-status-font-size: 0.93em;
