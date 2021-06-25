@@ -32,6 +32,12 @@ img {
      object-fit: contain;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+  font-size: inherit;
+}
+
 h1, h2, form {
   margin: 0;
 }
@@ -98,6 +104,28 @@ h1, h2, form {
   width: 4.3em;
   height: 4.3em;
   margin-right: 1.375em;
+}
+
+.bot .header .bot-image-header-status {
+  border-radius: 100%;
+  position: absolute;
+  bottom: 20%;
+  right: 7%;
+  display: block;
+  width: 0.5em;
+  height: 0.5em;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.bot .header .bot-image-header-status--online {
+  border-color: white;
+  background: #69de40 none repeat scroll 0% 0%;
+}
+
+.bot .header .bot-image-header-status--offline {
+  border-color: white;
+  background: red none repeat scroll 0% 0% !important;
 }
 
 .bot .header .bot-header-wrapper {
@@ -187,6 +215,97 @@ h1, h2, form {
   font-weight: 400;
 }
 
+.bot .body .conversation .conversation-header-error-message {
+  font-size: 0.8em;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  color: #181919;
+  font-weight: 400;
+  color: #EA001B;
+  font-style: italic;
+  margin-bottom: 0.3em;
+}
+
+.bot .body .conversation .conversation-error-message {
+  margin-top: 0.1em;
+  padding: 0 1.9em;
+  text-align: end;
+}
+
+.bot .body .conversation .conversation-error-message .conversation-error-text {
+  font-size: 0.75em;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  color: #6c757d;
+  font-weight: 400;
+}
+
+.bot .body .conversation .conversation-error-message .conversation-error-retry-counter {
+  font-style: italic;
+}
+
+.bot .body .conversation .conversation-error-message .conversation-error-retry {
+  font-style: italic;
+  text-decoration: underline;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.bot .body .conversation .conversation-message {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0 1.9em 0 3.81em;
+  display: flex;
+  flex-direction: column;
+}
+
+.bot .body .conversation .conversation-list-item {
+  position: relative;
+  background: #fff;
+  color: black;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.25;
+  max-width: 75%;
+  padding: 0.93em 1.06em;
+  border-radius: 1.25em 1.25em 1.25em 0.31px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  /*
+                * Markup
+                */
+}
+
+.bot .body .conversation .conversation-list-item .conversation-text-attachment-link, .bot .body .conversation .conversation-list-item a {
+  color: #DC5302;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-style: italic;
+  padding: 0 0.3em;
+  font-weight: 600;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.bot .body .conversation .conversation-list-item .conversation-text-attachment-link:hover, .bot .body .conversation .conversation-list-item a:hover {
+  color: #852d01;
+}
+
 .bot .body .conversation .conversation-list {
   padding: 0 1.9em 0 3.81em;
   display: -webkit-box;
@@ -198,33 +317,61 @@ h1, h2, form {
           flex-direction: column;
 }
 
-.bot .body .conversation .conversation-list-item {
-  position: relative;
-  background: #fff;
-  color: black;
+.bot .body .conversation .conversation-quick-reply-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bot .body .conversation .conversation-button {
+  border-color: transparent;
+  color: #cf4500;
+  background: white none repeat scroll 0% 0%;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  max-height: 2.5rem;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.25;
-  word-wrap: break-word;
-  max-width: 75%;
+  max-width: 100%;
+  margin: 4px;
+  height: 32px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 2px solid #cf4500;
+  border-radius: 1.25rem;
   padding: 0.93em 1.06em;
-  border-radius: 0.31em 1.25em 1.25em 0.31em;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.bot .body .conversation .conversation-list-item:not(:last-child) {
-  margin-bottom: 8px;
+.bot .body .conversation .conversation-button span {
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
 }
 
-.bot .body .conversation .conversation-list-item:first-child {
-  margin-top: 8px;
-  border-radius: 1.25em 1.25em 1.25em 0.31px;
-}
-
-.bot .body .conversation .conversation-list-item:last-child {
-  border-radius: 0.31 1.25em 1.25em 1.25px;
+.bot .body .conversation .conversation-button:hover {
+  color: #852d01;
+  border-color: #852d01;
 }
 
 .bot .body .conversation[data-source="bot"] .conversation-header-name {
@@ -236,10 +383,10 @@ h1, h2, form {
 .bot .body .conversation[data-source="user"] .conversation-header {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: flex-end;
+          justify-content: end;
 }
 
-.bot .body .conversation[data-source="user"] .conversation-list {
+.bot .body .conversation[data-source="user"] .conversation-message {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -248,10 +395,8 @@ h1, h2, form {
 .bot .body .conversation[data-source="user"] .conversation-list-item {
   background: #cf4500 none repeat scroll 0% 0%;
   color: white;
-}
-
-.bot .body .conversation[data-source="user"] .conversation-list-item:last-child {
-  border-radius: 1.25em 0.31em 1.25em 1.25em;
+  border-radius: 1.25em 1.25em 0.31em 1.25em;
+  margin: 0;
 }
 
 .bot .footer .form {
@@ -302,7 +447,8 @@ h1, h2, form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 17px;
+  height: 20px;
+  margin: 7px 0 12px 0;
 }
 
 .ticontainer .tidot {
@@ -310,8 +456,8 @@ h1, h2, form {
 }
 
 .tidot {
-  -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
-          animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+  -webkit-animation: mercuryTypingAnimation 1.25s infinite ease-in-out;
+          animation: mercuryTypingAnimation 1.25s infinite ease-in-out;
   border-radius: 2px;
   display: inline-block;
   height: 4px;
@@ -364,11 +510,6 @@ h1, h2, form {
           animation-delay: 400ms;
 }
 
-.loading {
-  -webkit-animation: 1.5s bulge infinite ease-out;
-          animation: 1.5s bulge infinite ease-out;
-}
-
 @-webkit-keyframes bulge {
   50% {
     -webkit-transform: scale(1.08);
@@ -392,6 +533,9 @@ h1, h2, form {
 @media screen and (max-width: 768px) {
   html {
     font-size: 14px;
+  }
+  .conversation-list-item {
+    max-width: 85% !important;
   }
 }
 /*# sourceMappingURL=index.css.map */

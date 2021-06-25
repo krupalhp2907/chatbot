@@ -3,100 +3,79 @@ const username = "krupal";
 const sendMessageFormEl = document.querySelector(".bot>.footer>#sendMessageForm");
 const sendMessageInputEl = document.getElementById("sendMessage");
 
-const defaultChatbotMessage = {
-    messages: [{
-        type: "text",
-        text: "Hello! How may I help you ?"
-    }],
-    time: Date.now(),
-    username: "bot",
-    uuid: uuidv4()
-};
-
 var conversation = [];
 
-const createConversationEl = (messageObj) => {
+const createMessageObjForEl = (message, username = "bot", error = false) => {
+    return {
+        message,
+        username,
+        error: error,
+        uuid: uuidv4(),
+    };
+}
 
-    const dataSource = messageObj.username == "bot" ? "bot" : "user";
+// Helper function that helps in scroll
+const addMessageScrollHelper = el => {
+    // check if element should scroll must be before pushing element to dom
+    const shouldScroll = checkShouldScroll(chatbotBodyEl);
 
-    const header = ((dataSource) => {
-        if (dataSource == "bot") {
-            return `
-            <div class="conversation-header">
-                <div class="conversation-header-image">
-                    <div class="bot-image-wrapper">
-                        <div class="bot-image">
-                            <img src="./img/mc-logo.svg" />
-                        </div>
-                    </div>
-                </div>
-                <div class="conversation-header-name">ODS Chatbot</div>
-            </div>
-            `;
-        } else {
-            return `
-            <div class="conversation-header conversation-header-user">
-                <div class="conversation-header-name">You</div>
-            </div>
-            `;
-        }
-    })(dataSource);
+    /**
+     * Add user message
+     */
+    chatbotBodyEl.appendChild(el);
 
-    const conversationListItems = ((messages) => {
-        let messagesListEl = "";
-        messages.forEach(message => {
-            switch (message.type) {
-                case "text":
-                    messagesListEl += `<div class="conversation-list-item">
-                    <div class="conversation-text">${message.text}</div>
-                </div>`;
-                default:
-                    break;
-            }
-        });
-        return messagesListEl;
-    })(messageObj.messages);
-
-    return `
-    <div class="conversation" data-source="${dataSource}">
-
-        ${header}
-
-        <div class="conversation-list">
-        
-            ${conversationListItems}
-        </div>
-    </div>`;
+    // scroll to bottom
+    if (shouldScroll) {
+        scrollToBottom(chatbotBodyEl);
+    }
 }
 
 const addMessage = (messageObj) => {
     const conversationObj = {
         ...messageObj
     }
-    // note conversation array length is alwyas > 0 for this prototype
-    if (
-        conversation.length > 0 &&
-        chatbotBodyEl.lastElementChild != null &&
-        conversation[conversation.length - 1].username == messageObj.username
-    ) {
 
-        // edit the last node
-        conversationObj.messages = conversation[conversation.length - 1].messages.concat(messageObj.messages);
-        conversation.pop();
-        console.log(conversation);
-        chatbotBodyEl.removeChild(chatbotBodyEl.lastChild);
+    const dataSource = messageObj.username === "bot" ? "bot" : "user";
+
+    // check if chatbotBodyEl has no child
+    if (chatbotBodyEl.childNodes.length === 0 || conversation.length === 0) {
+        // then add appropriate title 
+        chatbotBodyEl.appendChild(ConversationHeader(messageObj));
+    } else if (
+        // get data-source attribute and check is user changes
+        // lastElement cannot be empty
+        chatbotBodyEl.lastElementChild.getAttribute("data-source") != dataSource
+    ) {
+        // then add appropriate title
+        chatbotBodyEl.appendChild(ConversationHeader(messageObj));
     }
-    // create new node and append to dom
-    chatbotBodyEl.innerHTML += createConversationEl(conversationObj);
-    // scroll to bottom
-    // remaining
+
+    // Get conversation message element component
+    const conversationEl = ConversationMessage({
+        messageObj: conversationObj,
+        handleButtonClick: sendMessageHandler,
+    });
+
+    addMessageScrollHelper(conversationEl);
+
     conversation.push(conversationObj);
+
+    return conversationEl;
 }
 
+const scrollToBottom = (el) => {
+    if (el instanceof Element) {
+        el.scrollTop = el.scrollHeight;
+    }
+}
+
+const checkShouldScroll = (el) => {
+    return el.scrollTop + el.clientHeight <= el.scrollHeight;
+}
 
 const parseMessages = (messages) => {
 
-    const supportedMessageType = ["image", "text", "buttons"];
+    const supportedMessageType = ["image", "text", "buttons", "attachment", "custom"];
     let messagesList = [];
 
     messages
@@ -105,50 +84,59 @@ const parseMessages = (messages) => {
             let isMessageValid = false;
             if (message.text) {
                 isMessageValid = true;
-                messagesList.push({
-                    type: "text",
-                    text: message.text
-                });
+                messagesList.push(createMessageObjForEl({ type: "text", text: message.text }));
             }
 
             if (message.image) {
                 isMessageValid = true;
-                messagesList.push({
-                    type: "text",
-                    text: message.image
-                });
+                messagesList.push(createMessageObjForEl({ type: "text", text: message.image }));
+            }
+
+            if (message.buttons) {
+                isMessageValid = true;
+                messagesList.push(createMessageObjForEl({ type: "button", buttons: message.buttons }));
+            }
+
+            // probably should be handled with special UI elements
+            if (message.attachment) {
+                isMessageValid = true;
+                console.log("Attachment");
             }
 
             if (!isMessageValid) throw Error("Cannot parse message");
         });
 
-    addMessage({
-        messages: messagesList,
-        time: Date.now(),
-        username: "bot",
-        uuid: uuidv4()
-    });
+    // Show Bot message on UI
+    messagesList.forEach(message => addMessage(message));
 }
 
+const handleMessageError = (uuid) => {
 
-const sendMessage = async (messageText) => {
-    if (messageText === "") return;
+    // edit conversation message element
+    let message_idx = undefined;
+    for (let i in conversation) {
+        if (conversation[i].uuid == uuid) {
+            message_idx = i;
+            conversation[i].error = true;
+            break;
+        }
+    }
 
-    // currently only support of single text inputs
-    const messageObj = {
-        messages: [{ type: "text", text: messageText }],
-        time: Date.now(),
-        username,
-        uuid: uuidv4()
-    };
+    if (message_idx) {
+        const messageEl = document.querySelector(`[data-uuid="${uuid}"]`);
+        messageEl.firstElementChild.appendChild(ConversationErrorMessage());
+    }
 
-    // add user message to UI
-    addMessage(messageObj);
+}
 
-    const rasaMessageObj = {
-        message: messageObj.messages[0].text,
-        sender: messageObj.username
-    };
+const sendMessage = async (payload) => {
+    if (payload === "") return;
+
+
+    const rasaMessageObj = Object.freeze({
+        message: payload,
+        sender: username
+    });
 
     const response = await fetch(
         "http://localhost:5005/webhooks/rest/webhook",
@@ -163,22 +151,68 @@ const sendMessage = async (messageText) => {
 
     const messages = await response.json();
 
+    // remove loading animation
+    chatbotBodyEl.removeChild(chatbotBodyEl.lastChild);
+
     // parse chatbot message
     parseMessages(messages);
 }
 
-const sendMessageHandler = (e) => {
-    e.preventDefault();
-    const message = String(e.target.sendMessage.value);
-    sendMessage(message);
+const sendMessageHandler = (payload, messageText) => {
+
+    if (messageText == undefined) messageText = payload;
+    // add user message to UI
+    const messageObj = createMessageObjForEl({
+        type: "text",
+        text: messageText
+    }, username);
+
+    addMessage(messageObj);
+
+    // Add Loading animation
+    addMessageScrollHelper(Loader());
+
+
+    sendMessageInputEl.disabled = true;
+    sendMessageInputEl.value = "";
+    sendMessage(payload)
+        .then(suss => {
+            sendMessageInputEl.disabled = false;
+            sendMessageInputEl.focus();
+        })
+        .catch(err => {
+            sendMessageInputEl.disabled = false;
+            sendMessageInputEl.focus();
+            // remove loading animation
+            chatbotBodyEl.removeChild(chatbotBodyEl.lastChild);
+            handleMessageError(messageObj.uuid);
+        });
 }
 
 
 // application init function
 ((window) => {
     // add default message
-    addMessage(defaultChatbotMessage);
+    const defaultChatbotMessage = {
+        messages: [{
+            type: "text",
+            text: "Hello! How may I help you ?"
+        }],
+        time: Date.now(),
+        username: "bot",
+        uuid: uuidv4()
+    };
+
+    // check older messages if any 
+    scrollToBottom(chatbotBodyEl);
+
+    // now add smooth scroll 
+    chatbotBodyEl.setAttribute("style", "scroll-behavior: smooth;");
 
     // add event listners
-    sendMessageFormEl.addEventListener("submit", sendMessageHandler);
+    sendMessageFormEl.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const message = String(e.target.sendMessage.value);
+        sendMessageHandler(message);
+    });
 })(window);

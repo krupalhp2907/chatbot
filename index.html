@@ -18,6 +18,9 @@
         <div class="header">
             <div class="bot-header-image">
                 <div class="bot-image-wrapper">
+                    <div class="bot-image-header-status bot-image-header-status--online"
+                        style="border-color: rgb(255, 255, 255); background: rgb(105, 222, 64) none repeat scroll 0% 0%;">
+                    </div>
                     <div class="bot-image">
                         <img src="./img/mc-logo.svg" />
                     </div>
@@ -29,8 +32,9 @@
             </div>
         </div>
 
-        <div class="body">
+        <div class="body"></div>
 
+        
             <!-- <div class="conversation" data-source="bot">
                 <div class="conversation-header">
                     <div class="conversation-header-image">
@@ -42,31 +46,30 @@
                     </div>
                     <div class="conversation-header-name">ODS Chatbot</div>
                 </div>
+            </div>
 
-                <div class="conversation-list">
+            <div class="conversation" data-source="bot">
+                <div class="conversation-message">
                     <div class="conversation-list-item">
                         <div class="conversation-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
                             eaque soluta omnis mollitia cupiditate sequi voluptatum vero delectus earum? Ipsum illum
                             quis mollitia debitis esse. Sint explicabo ipsam modi quae..</div>
-                    </div>
-                    <div class="conversation-list-item">
-                        <div class="conversation-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-                            eaque soluta omnis mollitia cupiditate sequi voluptatum vero delectus earum? Ipsum illum
-                            quis mollitia debitis esse. Sint explicabo ipsam modi quae..</div>
-                    </div>
-                    <div class="conversation-list-item">
-                        <span class="conversation-text">Select the topic or write your question below.</span>
                     </div>
                 </div>
             </div>
 
             <div class="conversation" data-source="user">
-                <div class="conversation-header conversation-header-user">
+                <div class="conversation-header">
                     <div class="conversation-header-name">You</div>
                 </div>
-                <div class="conversation-list">
+            </div>
+
+            <div class="conversation" data-source="user">
+                <div class="conversation-message">
+                    <span class="conversation-header-error-message">( Message
+                        Failed to send )</span>
                     <div class="conversation-list-item">
-                        <div class="conversation-text">Hello there</div>
+                        <div class="conversation-text">Hello! How are you doing ?</div>
                     </div>
                 </div>
             </div>
@@ -82,30 +85,126 @@
                     </div>
                     <div class="conversation-header-name">ODS Chatbot</div>
                 </div>
-                <div class="conversation-list">
-                    <div class="conversation-list-item loading">
-                        <div class="conversation-text">
-                            <div class="ticontainer loading">
-                                <div class="tiblock">
-                                    <div class="tidot"></div>
-                                    <div class="tidot"></div>
-                                    <div class="tidot"></div>
-                                </div>
+            </div>
+
+            <div class="conversation" data-source="bot">
+                <div class="conversation-message">
+                    <div class="conversation-list-item">
+                        <div class="conversation-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
+                            eaque soluta omnis mollitia cupiditate sequi voluptatum vero delectus earum? Ipsum illum
+                            quis mollitia debitis esse. Sint explicabo ipsam modi quae..</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conversation" data-source="bot">
+                <div class="conversation-message">
+                    <div class="conversation-list-item">
+                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.uzasBNwxum5G7YTfZZAFEQHaEK%26pid%3DApi&f=1 "
+                            alt="Bot send image" />
+                    </div>
+                </div>
+            </div>
+            <div class="conversation" data-source="bot">
+                <div class="conversation-message">
+                    <div class="conversation-list-item">
+                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.uzasBNwxum5G7YTfZZAFEQHaEK%26pid%3DApi&f=1 "
+                            alt="Bot send image" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="conversation" data-source="bot">
+                <div class="conversation-message">
+                    <div class="conversation-quick-reply-wrapper">
+                        <div class="conversation-button">
+                            <span>Contact Sales</span>
+                        </div>
+                        <div class="conversation-button">
+                            <span>1</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- 
+            <div class="conversation" data-source="bot">
+                <div class="conversation-header">
+                    <div class="conversation-header-image">
+                        <div class="bot-image-wrapper">
+                            <div class="bot-image">
+                                <img src="./img/mc-logo.svg" />
                             </div>
+                        </div>
+                    </div>
+                    <div class="conversation-header-name">ODS Chatbot</div>
+                </div>
+
+                <div class="conversation-list">
+                    <div class="conversation-message">
+                        <span class="conversation-header-error-message">( Message
+                            Failed to send )</span>
+                        <div class="conversation-list-item">
+                            <div class="conversation-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
+                                eaque soluta omnis mollitia cupiditate sequi voluptatum vero delectus earum? Ipsum illum
+                                quis mollitia debitis esse. Sint explicabo ipsam modi quae..</div>
+                        </div>
+                    </div>
+                    <div class="conversation-message">
+                        <span class="conversation-header-error-message">( Message
+                            Failed to send )</span>
+                        <div class="conversation-list-item">
+                            <div class="conversation-text">Select the topic or write your question below.</div>
+                        </div>
+                    </div>
+                    <div class="conversation-message">
+                        <div class="conversation-list-item">
+                            <div class="conversation-text"> Click
+                                <span class="conversation-text-attachment-link">
+                                    <a href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.y4YjKmc1g-R9VZUvZzM_EQHaEK%26pid%3DApi&f=1"
+                                        download>
+                                        here
+                                    </a>
+                                </span>
+                                to download the csv file.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conversation-message">
+                        <div class="conversation-quick-reply-wrapper">
+                            <div class="conversation-button">
+                                <span>Contact Sales</span>
+                            </div>
+                            <div class="conversation-button">
+                                <span>1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conversation" data-source="user">
+                <div class="conversation-header">
+                    <div class="conversation-header-name">You</div>
+                </div>
+
+                <div class="conversation-list">
+                    <div class="conversation-message">
+                        <span class="conversation-header-error-message">( Message
+                            Failed to send )</span>
+                        <div class="conversation-list-item">
+                            <div class="conversation-text">Hello</div>
                         </div>
                     </div>
                 </div>
             </div> -->
 
 
-        </div>
-
-
         <div class="footer">
 
             <form class="form" id="sendMessageForm">
-                <input type="text" maxlength="256" placeholder="Type your message here" name="sendMessage" autofocus
-                    required autocomplete="off" />
+                <input type="text" maxlength="256" placeholder="Type your message here" id="sendMessage"
+                    name="sendMessage" autofocus required autocomplete="off" />
                 <div class="send-icon" id="send"><svg xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve">
                         <path fill="#d7d7d7"
@@ -118,6 +217,7 @@
     </div>
 
     <script src="./js/utils.js"></script>
+    <script src="./js/Components.js"></script>
     <script src="./js/index.js"></script>
 </body>
 
