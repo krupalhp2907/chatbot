@@ -337,7 +337,7 @@ h1,h2,form {
 
             &[data-source="user"] {
                 .conversation-header {
-                    justify-content: end;
+                    justify-content: flex-end;
                 }
                 .conversation-message {
                     align-items: flex-end;
